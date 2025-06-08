@@ -2,9 +2,18 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { incrementCounter, resetCounter, formatCount, isEvenCount } from './utils/counter'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  const handleIncrement = () => {
+    setCount(incrementCounter(count))
+  }
+
+  const handleReset = () => {
+    setCount(resetCounter())
+  }
 
   return (
     <>
@@ -18,9 +27,15 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={handleIncrement} data-testid="increment-btn">
+          {formatCount(count)}
         </button>
+        <button onClick={handleReset} data-testid="reset-btn">
+          Reset
+        </button>
+        <p className={isEvenCount(count) ? 'even-count' : 'odd-count'}>
+          Count is {isEvenCount(count) ? 'even' : 'odd'}
+        </p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

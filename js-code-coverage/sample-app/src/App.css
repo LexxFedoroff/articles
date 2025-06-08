@@ -40,3 +40,13 @@
 .read-the-docs {
   color: #888;
 }
+
+.even-count {
+  color: #4ade80;
+  font-weight: bold;
+}
+
+.odd-count {
+  color: #f97316;
+  font-weight: bold;
+}
