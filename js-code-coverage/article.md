@@ -138,7 +138,7 @@ Update `src/App.css` to include styles for even/odd count states:
 
 ## Setting Up Coverage Configuration
 
-### 1. Configure Vite for Testing and Coverage
+### 1. Configure Vite
 
 Update your `vite.config.ts`:
 
@@ -175,15 +175,21 @@ export default defineConfig({
 })
 ```
 
-### 2. Create Test Setup File
+Update your `package.json` scripts:
 
-Create `src/test/setup.ts`:
-
-```typescript
-import '@testing-library/jest-dom'
+```json
+{
+  "scripts": {
+    ...
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    ...
+  }
+}
 ```
 
-### 3. Configure Cypress
+### 2. Configure Cypress
 
 Create `cypress.config.ts`:
 
@@ -205,15 +211,13 @@ export default defineConfig({
 })
 ```
 
-### 4. Add Cypress Support Files
-
 Create `cypress/support/component.ts`:
 
 ```typescript
 import '@cypress/code-coverage/support'
 import './commands'
 
-import { mount } from 'cypress/react18'
+import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', mount)
 
@@ -226,34 +230,33 @@ declare global {
 }
 ```
 
-Create `cypress/support/commands.ts`:
-
-```typescript
-/// <reference types="cypress" />
-```
-
-### 5. Update Package.json Scripts
-
 Update your `package.json` scripts:
 
 ```json
 {
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
+    ...
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run --component",
+    "cypress:run": "cypress run --component --env coverage=false",
     "cypress:coverage": "cypress run --component",
-    "coverage": "pnpm run test:coverage && pnpm run cypress:coverage && ./coverage.sh"
+    ...
   }
 }
 ```
 
-### 6. Create Coverage Merge Script
+Note: if you have an error with cypress config file such as:
+```
+ReferenceError: exports is not defined in ES module scope
+```
+please add the following code to tsconfig.json
+```json
+  "compilerOptions": {
+    "module": "ESNext",
+  },
+```
+see details here https://github.com/cypress-io/cypress/issues/30313
+
+### 3. Create Coverage Merge Script
 
 Create a `coverage.sh` script to merge coverage reports from both Vitest and Cypress:
 

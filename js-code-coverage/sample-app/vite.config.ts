@@ -1,7 +1,30 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import istanbul from 'vite-plugin-istanbul'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    istanbul({
+      cypress: true,
+      requireEnv: false,
+    }),
+  ],
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    coverage: {
+      provider: 'istanbul',
+      reporter: [['json', { file: 'coverage-final.json' }]],
+      reportsDirectory: './.coverage-data/vitest',
+      exclude: [
+        'node_modules',
+        'dist',
+        'vite.config.ts',
+        'src/main.tsx',
+        'src/test/setup.ts'
+      ],
+    },
+  },
 })
