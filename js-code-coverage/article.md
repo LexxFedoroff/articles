@@ -20,9 +20,9 @@ Create a new React project with Vite:
 
 ```bash
 # Create new React TypeScript project
-pnpm create vite@latest sample-app -- --template react-ts
+npm create vite@latest sample-app -- --template react-ts
 cd sample-app
-pnpm install
+npm install
 ```
 
 ### 2. Install Testing Dependencies
@@ -31,10 +31,10 @@ Add all necessary testing and coverage dependencies:
 
 ```bash
 # Install Vitest and testing utilities
-pnpm add -D vitest @vitest/coverage-istanbul jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event
+npm install -D vitest @vitest/coverage-istanbul jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event
 
 # Install Cypress and coverage tools
-pnpm add -D cypress @cypress/code-coverage vite-plugin-istanbul nyc @istanbuljs/nyc-config-typescript
+npm install -D cypress @cypress/code-coverage vite-plugin-istanbul nyc @istanbuljs/nyc-config-typescript @types/mocha
 ```
 
 ### 3. Extract Counter Logic
@@ -392,7 +392,7 @@ describe('Counter Utility Functions', () => {
 Create `cypress/component/App.cy.tsx`:
 
 ```typescript
-import App from '../../src/App'
+import App from './App'
 
 describe('App Component', () => {
   beforeEach(() => {
@@ -464,112 +464,6 @@ describe('App Component', () => {
 
   it('should show learn more text', () => {
     cy.contains('Click on the Vite and React logos to learn more').should('be.visible')
-  })
-})
-```
-
-### Unit Tests for App Component
-
-Create `src/App.test.tsx` for React Testing Library unit tests:
-
-```typescript
-import { render, screen, fireEvent } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import App from './App'
-
-describe('App Component Unit Tests', () => {
-  it('should render app with initial state', () => {
-    render(<App />)
-    
-    expect(screen.getByText('Vite + React')).toBeInTheDocument()
-    expect(screen.getByTestId('increment-btn')).toHaveTextContent('count is 0')
-    expect(screen.getByTestId('reset-btn')).toHaveTextContent('Reset')
-    expect(screen.getByText('Count is even')).toBeInTheDocument()
-  })
-
-  it('should increment counter when button is clicked', () => {
-    render(<App />)
-    
-    const incrementBtn = screen.getByTestId('increment-btn')
-    
-    expect(incrementBtn).toHaveTextContent('count is 0')
-    
-    fireEvent.click(incrementBtn)
-    expect(incrementBtn).toHaveTextContent('count is 1')
-    
-    fireEvent.click(incrementBtn)
-    expect(incrementBtn).toHaveTextContent('count is 2')
-  })
-
-  it('should reset counter when reset button is clicked', () => {
-    render(<App />)
-    
-    const incrementBtn = screen.getByTestId('increment-btn')
-    const resetBtn = screen.getByTestId('reset-btn')
-    
-    // Increment counter
-    fireEvent.click(incrementBtn)
-    fireEvent.click(incrementBtn)
-    expect(incrementBtn).toHaveTextContent('count is 2')
-    
-    // Reset counter
-    fireEvent.click(resetBtn)
-    expect(incrementBtn).toHaveTextContent('count is 0')
-  })
-
-  it('should toggle even/odd status correctly', () => {
-    render(<App />)
-    
-    const incrementBtn = screen.getByTestId('increment-btn')
-    
-    // Start at 0 (even)
-    expect(screen.getByText('Count is even')).toBeInTheDocument()
-    expect(screen.queryByText('Count is odd')).not.toBeInTheDocument()
-    
-    // Click to 1 (odd)
-    fireEvent.click(incrementBtn)
-    expect(screen.getByText('Count is odd')).toBeInTheDocument()
-    expect(screen.queryByText('Count is even')).not.toBeInTheDocument()
-    
-    // Click to 2 (even)
-    fireEvent.click(incrementBtn)
-    expect(screen.getByText('Count is even')).toBeInTheDocument()
-    expect(screen.queryByText('Count is odd')).not.toBeInTheDocument()
-  })
-
-  it('should apply correct CSS classes for even/odd states', () => {
-    render(<App />)
-    
-    const incrementBtn = screen.getByTestId('increment-btn')
-    
-    // Even state (0)
-    expect(screen.getByText('Count is even')).toHaveClass('even-count')
-    
-    // Odd state (1)
-    fireEvent.click(incrementBtn)
-    expect(screen.getByText('Count is odd')).toHaveClass('odd-count')
-  })
-
-  it('should render all static elements', () => {
-    render(<App />)
-    
-    expect(screen.getByText('Edit src/App.tsx and save to test HMR')).toBeInTheDocument()
-    expect(screen.getByText('Click on the Vite and React logos to learn more')).toBeInTheDocument()
-    expect(screen.getByAltText('Vite logo')).toBeInTheDocument()
-    expect(screen.getByAltText('React logo')).toBeInTheDocument()
-  })
-
-  it('should have correct external links', () => {
-    render(<App />)
-    
-    const viteLink = screen.getByRole('link', { name: /vite logo/i })
-    const reactLink = screen.getByRole('link', { name: /react logo/i })
-    
-    expect(viteLink).toHaveAttribute('href', 'https://vite.dev')
-    expect(viteLink).toHaveAttribute('target', '_blank')
-    
-    expect(reactLink).toHaveAttribute('href', 'https://react.dev')
-    expect(reactLink).toHaveAttribute('target', '_blank')
   })
 })
 ```
