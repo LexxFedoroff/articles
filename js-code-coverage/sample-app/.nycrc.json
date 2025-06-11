@@ -10,7 +10,9 @@
         "cypress/**/*.*",
         "**/*.d.ts",
         "**/*.cy.tsx",
-        "**/*.cy.ts"
+        "**/*.cy.ts",
+        "**/*.test.ts",
+        "src/main.tsx"
     ],
     "reporter": [
         "json"

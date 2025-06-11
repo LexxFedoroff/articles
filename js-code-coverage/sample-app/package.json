@@ -13,7 +13,8 @@
     "test:coverage": "vitest run --coverage",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --component --env coverage=false",
-    "cypress:coverage": "cypress run --component"
+    "cypress:coverage": "cypress run --component",
+    "coverage": "npm run test:coverage && npm run cypress:coverage && ./coverage-merge.sh"
   },
   "dependencies": {
     "react": "^19.1.0",

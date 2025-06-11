@@ -256,67 +256,6 @@ please add the following code to tsconfig.json
 ```
 see details here https://github.com/cypress-io/cypress/issues/30313
 
-### 3. Create Coverage Merge Script
-
-Create a `coverage.sh` script to merge coverage reports from both Vitest and Cypress:
-
-```bash
-#!/bin/bash
-
-# Coverage merging script for counter project
-# Merges Vitest and Cypress coverage reports into a single HTML report
-
-REPORTS_FOLDER=".coverage-data"
-NYC_FOLDER=".nyc_output"
-FINAL_OUTPUT_FOLDER=".coverage-html"
-
-echo "🔄 Merging coverage reports..."
-
-# Create directories if they don't exist
-mkdir -p "$REPORTS_FOLDER"
-mkdir -p "$NYC_FOLDER"
-
-# Rename coverage files for merging
-if [ -f "$REPORTS_FOLDER/cypress/coverage-final.json" ]; then
-  mv "$REPORTS_FOLDER/cypress/coverage-final.json" "$REPORTS_FOLDER/coverage-cypress.json"
-  echo "✅ Found Cypress coverage data"
-else
-  echo "⚠️  No Cypress coverage data found"
-fi
-
-if [ -f "$REPORTS_FOLDER/vitest/coverage-final.json" ]; then
-  mv "$REPORTS_FOLDER/vitest/coverage-final.json" "$REPORTS_FOLDER/coverage-vitest.json"
-  echo "✅ Found Vitest coverage data"
-else
-  echo "⚠️  No Vitest coverage data found"
-fi
-
-# Clean output directory
-rm -rf "$FINAL_OUTPUT_FOLDER"
-mkdir -p "$FINAL_OUTPUT_FOLDER"
-
-# Merge coverage reports
-echo "🔀 Merging coverage data..."
-npx nyc merge "$REPORTS_FOLDER"
-mv coverage.json "$NYC_FOLDER/out.json"
-
-# Generate reports
-echo "📊 Generating coverage reports..."
-npx nyc report --reporter=html --reporter=text --report-dir="$FINAL_OUTPUT_FOLDER"
-
-# Cleanup temporary files
-rm -rf "$NYC_FOLDER"
-rm -rf "$REPORTS_FOLDER"
-
-echo "✅ Coverage report generated at: $FINAL_OUTPUT_FOLDER/index.html"
-```
-
-Make the script executable:
-
-```bash
-chmod +x coverage.sh
-```
-
 ## Writing Comprehensive Tests
 
 Now let's write tests that will achieve 100% code coverage. We'll create both unit tests and component tests for our simple counter application.
@@ -468,53 +407,90 @@ describe('App Component', () => {
 })
 ```
 
-## Understanding the Coverage Output
+### 3. Create Coverage Merge Script
 
-### Vitest Coverage
-- Located in `client/.coverage-data/vitest/`
-- Covers unit test scenarios
-- Fast execution, good for TDD workflows
+If we run the both coverages 
+```
+npm test:coverage
+npm cypress:coverage
+```
+we will have two diferent files with coverage data :
+```
+.coverage-data/cypress/coverage-final.json 
+.coverage-data/vitest/coverage-final.json 
+```
+and we need to merge them into one report. To achive this we can write a simple bash script.
 
-### Cypress Coverage
-- Located in `client/.coverage-data/cypress/`
-- Covers integration scenarios and user interactions
-- More comprehensive but slower execution
+Create a `coverage-merge.sh` script to merge coverage reports from both Vitest and Cypress:
 
-### Merged Coverage
-- Located in `client/.coverage-html/`
-- Combines both Vitest and Cypress coverage
-- Provides the most accurate representation of actual code coverage
+```bash
+#!/bin/bash
 
-### Server Coverage
-- Located in `server/.coverage-html/`
-- Covers API endpoints and business logic
-- Includes coverage thresholds for quality gates
+# Coverage merging script for counter project
+# Merges Vitest and Cypress coverage reports into a single HTML report
 
-## Best Practices
+REPORTS_FOLDER=".coverage-data"
+NYC_FOLDER=".nyc_output"
+FINAL_OUTPUT_FOLDER=".coverage-html"
 
-### 1. Coverage Thresholds
-Set appropriate thresholds to maintain code quality:
+echo "🔄 Merging coverage reports..."
 
-```typescript
-thresholds: {
-  functions: 100,   // All functions should be tested
-  lines: 90,        // 90% line coverage minimum
-  statements: 90,   // 90% statement coverage minimum
-  branches: 80,     // 80% branch coverage minimum
-}
+# Recreate necessary directories
+rm -rf "$NYC_FOLDER"
+mkdir -p "$NYC_FOLDER"
+
+rm -rf "$FINAL_OUTPUT_FOLDER"
+mkdir -p "$FINAL_OUTPUT_FOLDER"
+
+# Rename coverage files for merging
+if [ -f "$REPORTS_FOLDER/cypress/coverage-final.json" ]; then
+  mv "$REPORTS_FOLDER/cypress/coverage-final.json" "$REPORTS_FOLDER/coverage-cypress.json"
+  echo "✅ Found Cypress coverage data"
+else
+  echo "⚠️  No Cypress coverage data found"
+fi
+
+if [ -f "$REPORTS_FOLDER/vitest/coverage-final.json" ]; then
+  mv "$REPORTS_FOLDER/vitest/coverage-final.json" "$REPORTS_FOLDER/coverage-vitest.json"
+  echo "✅ Found Vitest coverage data"
+else
+  echo "⚠️  No Vitest coverage data found"
+fi
+
+# Merge coverage reports
+echo "🔀 Merging coverage data..."
+npx nyc merge "$REPORTS_FOLDER"
+mv coverage.json "$NYC_FOLDER/out.json"
+
+# Generate reports
+echo "📊 Generating coverage reports..."
+npx nyc report --reporter=html --reporter=text --report-dir="$FINAL_OUTPUT_FOLDER"
+
+# Cleanup temporary files
+rm -rf "$NYC_FOLDER"
+rm -rf "$REPORTS_FOLDER"
+
+echo "✅ Coverage report generated at: $FINAL_OUTPUT_FOLDER/index.html"
 ```
 
-### 2. Exclude Patterns
-Exclude files that shouldn't be measured:
-- Configuration files (`vite.config.ts`, `cypress.config.js`)
-- Entry points (`index.ts`, `main.tsx`)
-- Type definitions
-- Test utilities
+Make the script executable:
 
-### 4. Coverage Reports
-- Use HTML reports for local development and debugging
-- Use JSON/LCOV reports for CI/CD integration
-- Use text reports for quick command-line feedback
+```bash
+chmod +x coverage.sh
+```
+
+here we can see the result:
+```
+-------------|---------|----------|---------|---------|-------------------
+File         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------|---------|----------|---------|---------|-------------------
+All files    |     100 |      100 |     100 |     100 |                   
+ src         |     100 |      100 |     100 |     100 |                   
+  App.tsx    |     100 |      100 |     100 |     100 |                   
+ src/utils   |     100 |      100 |     100 |     100 |                   
+  counter.ts |     100 |      100 |     100 |     100 |                   
+-------------|---------|----------|---------|---------|-------------------
+```
 
 ## Conclusion
 

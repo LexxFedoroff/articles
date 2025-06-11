@@ -13,7 +13,6 @@ export default defineConfig({
   ],
   test: {
     environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
     coverage: {
       provider: 'istanbul',
       reporter: [['json', { file: 'coverage-final.json' }]],
@@ -22,8 +21,7 @@ export default defineConfig({
         'node_modules',
         'dist',
         'vite.config.ts',
-        'src/main.tsx',
-        'src/test/setup.ts'
+        'src/main.tsx'
       ],
     },
   },

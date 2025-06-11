@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 
 .coverage-data
+.coverage-html
 .nyc_output
