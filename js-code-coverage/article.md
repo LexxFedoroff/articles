@@ -494,3 +494,5 @@ In this article, we learned how to set up code coverage for a React TypeScript p
 - Merging coverage reports from different testing tools
 
 Good code coverage helps teams write better, more reliable code. By using both Vitest and Cypress, we can test our code thoroughly and catch issues early. Remember that while 100% coverage is great, the quality of your tests is just as important as the coverage percentage.
+
+The full source code can be found [here](https://github.com/LexxFedoroff/articles/tree/main/js-code-coverage/sample-app)
