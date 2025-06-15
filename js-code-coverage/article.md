@@ -12,6 +12,9 @@ We will work with a simple React app that has:
 - **Testing**: Unit tests with Vitest and component tests with Cypress
 - **Coverage**: Reports that show how much of your code is tested
 
+> [!NOTE]
+> The full source code can be found [here](https://github.com/LexxFedoroff/articles/tree/main/js-code-coverage/sample-app)
+
 ## Creating the Sample Project
 
 Let's start by creating a new React project with TypeScript. We'll work with the simple counter app that comes with it.
@@ -127,7 +130,7 @@ export default App
 
 ### 1. Set Up Vite
 
-Update your `vite.config.ts` file:
+Update your `vite.config.ts` file according to the [official documentation](https://vitest.dev/guide/coverage):
 
 ```typescript
 /// <reference types="vitest" />
@@ -178,7 +181,7 @@ Update your `package.json` scripts:
 
 ### 2. Set Up Cypress
 
-Create `cypress.config.ts`:
+Create `cypress.config.ts` using the [official documentation](https://docs.cypress.io/app/tooling/code-coverage#E2E-code-coverage):
 
 ```typescript
 import { defineConfig } from 'cypress'
@@ -494,5 +497,3 @@ In this article, we learned how to set up code coverage for a React TypeScript p
 - Merging coverage reports from different testing tools
 
 Good code coverage helps teams write better, more reliable code. By using both Vitest and Cypress, we can test our code thoroughly and catch issues early. Remember that while 100% coverage is great, the quality of your tests is just as important as the coverage percentage.
-
-The full source code can be found [here](https://github.com/LexxFedoroff/articles/tree/main/js-code-coverage/sample-app)
