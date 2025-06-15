@@ -12,8 +12,7 @@ We will work with a simple React app that has:
 - **Testing**: Unit tests with Vitest and component tests with Cypress
 - **Coverage**: Reports that show how much of your code is tested
 
-> [!NOTE]
-> The full source code can be found [here](https://github.com/LexxFedoroff/articles/tree/main/js-code-coverage/sample-app)
+> ℹ️ The full source code can be found [here](https://github.com/LexxFedoroff/articles/tree/main/js-code-coverage/sample-app)
 
 ## Creating the Sample Project
 
