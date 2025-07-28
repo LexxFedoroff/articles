@@ -101,11 +101,11 @@ Cool, everything is working as expected and now we can prepare the Plesk control
 
 I’m assuming you already have a Plesk instance. Then, you need to install a docker extension. You can do it easily via the extension catalog.   
 
-![the docker extension]({{ site.baseurl }}/images/image01.png)
+![the docker extension](./images/image01.png)
 
 Plesk has a useful feature - you can create a domain with a temporary domain name for the test purpose, so let’s create a new domain.
  
-![select a domain name]({{ site.baseurl }}/images/image02.png)
+![select a domain name]({{ site.baseurl }}/golang-and-plesk/images/image02.png)
 
 Nice, now we have a test domain, and we can deploy our test service.
 
