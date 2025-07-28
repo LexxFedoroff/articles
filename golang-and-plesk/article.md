@@ -121,7 +121,7 @@ First of all, we need an image that we have to run on our server. You can do it 
 ```
 
 Next, open the docker extension and upload the created image, then run it.
-Also, you can push the image to the official Docker Hub (https://hub.docker.com/)
+Also, you can push the image to the official [Docker Hub](https://hub.docker.com/)
 
 ![a docker catalog](./images/image04.png)
  
@@ -141,7 +141,7 @@ Now you can open a browser and follow the link https://reverent-ganguly.139-59-2
 
 ![hello page in a browser](./images/image07.png)
   
-### Section 6: Conclusion
+## Section 6: Conclusion
 
 As you can see, you can simply deploy any Go application. Also, using Plesk control panel you can easily add an SSL certificate, maintain security fixes, monitor your application, and do many other important actions. 
 Using the Docker extension, you can fully manage your application, update or restart it, view logs, etc.
