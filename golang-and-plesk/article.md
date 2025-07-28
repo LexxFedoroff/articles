@@ -105,11 +105,11 @@ I’m assuming you already have a Plesk instance. Then, you need to install a do
 
 Plesk has a useful feature - you can create a domain with a temporary domain name for the test purpose, so let’s create a new domain.
  
-![select a domain name]({{ site.baseurl }}/golang-and-plesk/images/image02.png)
+![select a domain name](./images/image02.png)
 
 Nice, now we have a test domain, and we can deploy our test service.
 
-![a created domain]({{ site.baseurl }}/images/image03.png)
+![a created domain](./images/image03.png)
  
 ## Section 4: Deploying Your Go Application
 
@@ -123,23 +123,23 @@ First of all, we need an image that we have to run on our server. You can do it 
 Next, open the docker extension and upload the created image, then run it.
 Also, you can push the image to the official Docker Hub (https://hub.docker.com/)
 
-![a docker catalog]({{ site.baseurl }}/images/image04.png)
+![a docker catalog](./images/image04.png)
  
 In the settings, turn off auto port mapping. 
 
 Next, open the Docker Proxy Rules
 
-![open prxy rules]({{ site.baseurl }}/images/image05.png)
+![open prxy rules](./images/image05.png)
  
 And add the rule 
 
-![add a proxy URL]({{ site.baseurl }}/images/image06.png)
+![add a proxy URL](./images/image06.png)
  
 ## Section 5: Testing Your Application
 
 Now you can open a browser and follow the link https://reverent-ganguly.139-59-209-22.plesk.page/
 
-![hello page in a browser]({{ site.baseurl }}/images/image07.png)
+![hello page in a browser](./images/image07.png)
   
 ### Section 6: Conclusion
 
